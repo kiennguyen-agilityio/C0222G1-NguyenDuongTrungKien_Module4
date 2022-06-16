@@ -16,6 +16,7 @@ public class MedicalDeclarationController {
         model.addAttribute("medical", new Information());
         return "medical/update";
     }
+
     @RequestMapping(value = "/saveMedical", method = RequestMethod.POST)
     public String submit(@ModelAttribute("medical") Information information, ModelMap modelMap) {
         modelMap.addAttribute("vehicle", information.getVehicles());

@@ -9,7 +9,7 @@ public class IInformationServiceRepo implements InformationServiceRepo {
 
     @Override
     public List<String> vehicle() {
-        List<String> vehicle = new ArrayList<>() ;
+        List<String> vehicle = new ArrayList<>();
         vehicle.add("tàu hỏa");
         vehicle.add("xe bus");
         vehicle.add("xe máy");
@@ -19,7 +19,7 @@ public class IInformationServiceRepo implements InformationServiceRepo {
 
     @Override
     public List<String> gender() {
-        List<String> gender = new ArrayList<>() ;
+        List<String> gender = new ArrayList<>();
         gender.add("nam");
         gender.add("nữ");
         gender.add("khác");
@@ -38,7 +38,7 @@ public class IInformationServiceRepo implements InformationServiceRepo {
 
     @Override
     public List<String> year() {
-        List<String> year=new ArrayList<>();
+        List<String> year = new ArrayList<>();
         year.add("2011");
         year.add("2012");
         year.add("2013");

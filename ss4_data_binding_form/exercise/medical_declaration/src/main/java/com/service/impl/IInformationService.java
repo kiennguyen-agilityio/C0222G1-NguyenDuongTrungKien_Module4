@@ -7,7 +7,8 @@ import com.service.InformationService;
 import java.util.List;
 
 public class IInformationService implements InformationService {
-   private InformationServiceRepo serviceRepo = new IInformationServiceRepo() ;
+    private InformationServiceRepo serviceRepo = new IInformationServiceRepo();
+
     @Override
     public List<String> vehicle() {
         return serviceRepo.vehicle();

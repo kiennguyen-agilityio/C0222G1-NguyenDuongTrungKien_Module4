@@ -14,7 +14,8 @@ public class Information {
     private String startDate;
     private String endDate;
     private String place;
-    private String vehicles ;
+    private String vehicles;
+
     public Information() {
     }
 
