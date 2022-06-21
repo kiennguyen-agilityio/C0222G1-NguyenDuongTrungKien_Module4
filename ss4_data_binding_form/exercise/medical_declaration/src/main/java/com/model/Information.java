@@ -7,7 +7,7 @@ public class Information {
     private int day;
     private String gender;
     private String nationality;
-    private int IdCard;
+    private int idCard;
     private String travelInformation;
     private String numberVehicle;
     private String seat;
@@ -39,7 +39,7 @@ public class Information {
         this.day = day;
         this.gender = gender;
         this.nationality = nationality;
-        IdCard = idCard;
+        this.idCard = idCard;
         this.travelInformation = travelInformation;
         this.numberVehicle = numberVehicle;
         this.seat = seat;
@@ -98,11 +98,11 @@ public class Information {
     }
 
     public int getIdCard() {
-        return IdCard;
+        return idCard;
     }
 
     public void setIdCard(int idCard) {
-        IdCard = idCard;
+        this.idCard = idCard;
     }
 
     public String getTravelInformation() {
