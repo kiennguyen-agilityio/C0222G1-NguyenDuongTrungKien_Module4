@@ -11,7 +11,8 @@ import java.util.List;
 @Service
 public class BlogService implements IBlogService {
     @Autowired
-    private IBlogRepository blogRepository ;
+    private IBlogRepository blogRepository;
+
     @Override
     public List<BlogModel> findAll() {
         return blogRepository.findAll();
@@ -24,7 +25,7 @@ public class BlogService implements IBlogService {
 
     @Override
     public void update(BlogModel blogModel) {
-        blogRepository.update(blogModel.getTitle(),blogModel.getContent(),blogModel.getId()) ;
+        blogRepository.update(blogModel.getTitle(), blogModel.getContent(), blogModel.getId());
     }
 
     @Override
@@ -41,6 +42,4 @@ public class BlogService implements IBlogService {
     public List<BlogModel> searchByName(String title) {
         return blogRepository.search(title);
     }
-
-
 }

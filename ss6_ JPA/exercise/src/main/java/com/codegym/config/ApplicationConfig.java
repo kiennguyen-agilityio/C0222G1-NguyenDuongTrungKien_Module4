@@ -51,17 +51,17 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
 
     //Config kết nối database
     @Bean
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/blog?createDatabaseIfNotExist=true");
-        dataSource.setUsername( "root" );
-        dataSource.setPassword( "sherlockhome1204" );
+        dataSource.setUsername("root");
+        dataSource.setPassword("sherlockhome1204");
         return dataSource;
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory emf){
+    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(emf);
         return transactionManager;

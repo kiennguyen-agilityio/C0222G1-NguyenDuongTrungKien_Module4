@@ -50,20 +50,22 @@ public class BlogController {
         redirect.addFlashAttribute("success", "Modified product successfully!");
         return "redirect:/list";
     }
+
     @RequestMapping("/blog/{id}/delete")
     public String delete(@PathVariable int id, RedirectAttributes redirect) {
         blogService.delete(id);
         redirect.addFlashAttribute("success", "Deleted success");
         return "redirect:/list";
     }
+
     @GetMapping("/{id}/read")
-    public String showRead(@PathVariable Integer id, Model model){
+    public String showRead(@PathVariable Integer id, Model model) {
         model.addAttribute("blog", blogService.findById(id));
         return "view";
     }
 
     @GetMapping("/search")
-    public String searchByName(String title, Model model){
+    public String searchByName(String title, Model model) {
         model.addAttribute("blogList", blogService.searchByName(title));
         return "index";
     }

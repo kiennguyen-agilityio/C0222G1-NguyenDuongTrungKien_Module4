@@ -7,9 +7,9 @@ public class BlogModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private int id ;
-    private String title ;
-    private String content ;
+    private int id;
+    private String title;
+    private String content;
 
     public BlogModel() {
     }
