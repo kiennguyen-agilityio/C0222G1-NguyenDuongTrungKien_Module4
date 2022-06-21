@@ -26,12 +26,11 @@ public class ProductController {
     @RequestMapping("/product/create")
     public String create(Model model) {
         model.addAttribute("product", new Product());
-        return "/create";
+        return "create";
     }
 
-    @RequestMapping("product/save")
+    @RequestMapping("/product/save")
     public String save(Product product, RedirectAttributes redirect) {
-        product.setId((int) (Math.random() * 10000));
         productService.save(product);
         redirect.addFlashAttribute("success", "Saved customer successfully!");
         return "redirect:/";
