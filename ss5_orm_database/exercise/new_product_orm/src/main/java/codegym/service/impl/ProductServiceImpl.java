@@ -7,6 +7,7 @@ import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
     private ProductServiceImpl productService = new ProductServiceImpl();
+
     @Override
     public List<Product> findAll() {
         return productService.findAll();
@@ -14,17 +15,17 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void save(Product product) {
-    productService.save(product);
+        productService.save(product);
     }
 
     @Override
     public void update(int id, Product product) {
-    productService.update(id,product);
+        productService.update(id, product);
     }
 
     @Override
     public void remove(int id) {
-    productService.remove(id);
+        productService.remove(id);
     }
 
     @Override

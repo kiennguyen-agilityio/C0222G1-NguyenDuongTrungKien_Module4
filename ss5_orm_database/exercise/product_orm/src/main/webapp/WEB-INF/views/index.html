@@ -27,17 +27,17 @@
         <th colspan="2">Action</th>
     </tr>
     </thead>
-        <tbody>
-        <tr th:each="product,countProduct : ${products}">
-            <td th:text="${countProduct.count}"></td>
-            <td th:text="${product.name}"></td>
-            <td th:text="${product.price}"></td>
-            <td th:text="${product.description}"></td>
-            <td th:text="${product.producer}"></td>
-            <td><a th:href="@{/product/{id}/edit(id=${product.id})}">   edit</a></td>
-            <td><a th:href="@{/product/{id}/delete(id=${product.getId()})}">delete</a></td>
-        </tr>
-        </tbody>
+    <tbody>
+    <tr th:each="product,countProduct : ${products}">
+        <td th:text="${countProduct.count}"></td>
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.price}"></td>
+        <td th:text="${product.description}"></td>
+        <td th:text="${product.producer}"></td>
+        <td><a th:href="@{/product/{id}/edit(id=${product.id})}"> edit</a></td>
+        <td><a th:href="@{/product/{id}/delete(id=${product.getId()})}">delete</a></td>
+    </tr>
+    </tbody>
 </table>
 
 <div class="notify">

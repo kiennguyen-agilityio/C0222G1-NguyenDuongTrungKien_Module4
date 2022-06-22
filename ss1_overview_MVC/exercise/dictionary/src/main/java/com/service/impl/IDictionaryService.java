@@ -15,7 +15,7 @@ public class IDictionaryService implements DictionaryService {
         dictionaries.put("phức tạp", "complicated");
     }
 
-    public String translate (String word) {
-         return dictionaries.get(word);
+    public String translate(String word) {
+        return dictionaries.get(word);
     }
 }

@@ -15,6 +15,7 @@ import java.util.List;
 @Controller
 public class MusicController {
     private MusicServiceImp serviceImp = new MusicServiceImp();
+
     @GetMapping("/list")
     public String index(Model model) {
         List<Music> musics = serviceImp.getAll();
