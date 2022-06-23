@@ -24,13 +24,12 @@ public class BlogController {
     ICategoryService categoryService;
 
 
-    @GetMapping
+    @GetMapping("")
     public String index(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
         Sort sort = Sort.by("create_date").ascending();
-        Page<BlogModel> list = blogService.findAllBlog(PageRequest.of(page, 3, sort));
-        model.addAttribute("blog", new BlogModel());
+        Page<BlogModel> list = blogService.findAllBlog(PageRequest.of(page, 1, sort));
         model.addAttribute("list", list);
-        return "index";
+        return "blog/index";
     }
 
     @GetMapping("/create")
