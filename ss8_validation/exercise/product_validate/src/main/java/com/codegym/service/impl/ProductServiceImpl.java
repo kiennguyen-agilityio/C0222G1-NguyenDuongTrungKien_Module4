@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class ProductServiceImpl implements ProductService {
     @Autowired
@@ -26,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void update( Product product) {
+    public void update(Product product) {
         productRepo.update(product.getName(), product.getPrice(), product.getDescription(), product.getProducer(), product.getId());
     }
 

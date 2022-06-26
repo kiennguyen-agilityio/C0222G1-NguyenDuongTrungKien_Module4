@@ -1,0 +1,64 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+    <title>Home Page</title>
+</head>
+<body>
+<p>
+    <a th:href="@{/employee/create}">Add new employee</a>
+</p>
+<table id="products">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th >Name</th>
+        <th>Area</th>
+        <th >Cost</th>
+        <th>Max people</th>
+        <th >Room standard</th>
+        <th >Other convenience</th>
+        <th >Pool area</th>
+        <th >>Floors</th>
+        <th >Rent type</th>
+        <th >Service type</th>
+        <th >Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="service: ${serviceList}">
+        <td th:text="${service.name}"></td>
+        <td th:text="${service.serviceArea}"></td>
+        <td th:text="${service.serviceCost}"></td>
+        <td th:text="${service.serviceMaxPeople}"></td>
+        <td th:text="${service.serviceStandardRoom}"></td>
+        <td th:text="${service.descriptionOtherConvenience}"></td>
+        <td th:text="${service.servicePoolArea}"></td>
+        <td th:text="${service.serviceNumberOfFloors}"></td>
+        <td th:text="${service.rentType.rentTypeName}"></td>
+        <td th:text="${service.serviceType.serviceTypeName}"></td>
+        <td class="text-center"><a class="btn success"
+                                   th:href="@{/service/view/{id}(id=${service.id})}">Xem</a></td>
+
+        <td class="text-center"><a class="btn btn-primary" th:href="@{/service/{id}/edit(id=${service.id})}">Sửa</a>
+        </td>
+
+        <td class="text-center"><a class="btn btn-danger" th:href="@{/service/delete/{id}(id=${service.id})}"
+                                   onclick="return confirm('Bạn muốn xóa khách hàng này không?')">Xóa</a></td>
+    </tr>
+    </tbody>
+</table>
+<div>
+    <span>
+        <a th:if="${serviceList.hasPrevious()}" th:href="@{/service/(page = ${serviceList.number - 1})}">Previous</a>
+    </span>
+    <span th:each="pageNo: ${#numbers.sequence(0,serviceList.totalPages - 1)}">
+        <a th:href="@{/service(page = ${pageNo})}" th:text="${pageNo}"></a>
+    </span>
+    <span>
+        <a th:if="${serviceList.hasNext()}" th:href="@{/service/(page = ${serviceList.number +1})}">Next</a>
+    </span>
+</div>
+<div th:replace="~{/layout::footer}">
+</div>
+</body>
+</html>

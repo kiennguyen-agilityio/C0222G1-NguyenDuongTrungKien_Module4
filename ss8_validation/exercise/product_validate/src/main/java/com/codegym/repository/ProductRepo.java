@@ -11,8 +11,9 @@ import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
 import java.util.List;
+
 @Transactional
-public interface ProductRepo extends JpaRepository<Product,Integer> {
+public interface ProductRepo extends JpaRepository<Product, Integer> {
     @Query(value = "select * from product", nativeQuery = true)
     List<Product> findAllProduct();
 
@@ -22,9 +23,9 @@ public interface ProductRepo extends JpaRepository<Product,Integer> {
     @Modifying
     @Query(value = "update product set name=:name,price=:price,description=:description,producer=:producer where id=:id", nativeQuery = true)
     int update(@Param("name") String name,
-               @Param("price") double price,
-               @Param("description") String description ,
-               @Param("producer")String producer,
+               @Param("price") String price,
+               @Param("description") String description,
+               @Param("producer") String producer,
                @Param("id") Integer id);
 
     @Query(value = "select * from product where id=:id", nativeQuery = true)

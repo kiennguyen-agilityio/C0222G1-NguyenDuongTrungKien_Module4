@@ -21,13 +21,6 @@ import java.util.List;
 public class ProductController {
     @Autowired
     ProductService service;
-//
-//    @GetMapping("/")
-//    public String index(Model model) {
-//        List products = service.findAll();
-//        model.addAttribute("products", products);
-//        return "index";
-//    }
 
     @GetMapping("")
     public String showListProduct(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {

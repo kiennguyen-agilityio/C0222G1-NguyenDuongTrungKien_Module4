@@ -1,24 +1,22 @@
 package com.codegym.model;
 
+import javax.persistence.Entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
-@Entity
-@Table
+@Entity(name = "product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @NotEmpty
     @Pattern(regexp = "^(\\(([^)]+)\\))?[[:punct:]]?\\p{Lu}+(?:[\\s'-]?[\\p{L}\\d]+)+(\\(([^)]+)\\))*$", message = "Invalid name of product!")
     private String name;
 
-
-    @NotEmpty
-    @Pattern(regexp = "^[0-9]+$", message = "Invalid product price!")
-    private double price;
+    @Column(columnDefinition = "double")
+    private String price;
 
     private String description;
 
@@ -29,21 +27,11 @@ public class Product {
     public Product() {
     }
 
-    public Product(int id, @NotEmpty @Pattern(regexp = "^(\\(([^)]+)\\))?[[:punct:]]?\\p{Lu}+(?:[\\s'-]?[\\p{L}\\d]+)+(\\(([^)]+)\\))*$", message = "Invalid name of product!") String name,
-                           @NotEmpty @Pattern(regexp = "^[0-9]+$", message = "Invalid product price!") double price, String description,
-                           @NotEmpty @Pattern(regexp = "^(\\(([^)]+)\\))?[[:punct:]]?\\p{Lu}+(?:[\\s'-]?[\\p{L}\\d]+)+(\\(([^)]+)\\))*$", message = "Invalid firm of product!") String producer) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.producer = producer;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -55,11 +43,11 @@ public class Product {
         this.name = name;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 

@@ -1,0 +1,102 @@
+!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3 >TẠO MỚI Nhân Viên</h3>
+<div>
+<form  th:action="@{/employee/save}" method="post" th:object="${employee}">
+    <div>
+        <label>Mã nhân viên:</label>
+            <input  type="text" th:field="*{id}">
+            <label th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></label>
+        </label>
+    </div>
+    <div>
+        <label>Tên Nhân Viên:</label>
+            <input  type="text" th:field="*{name}">
+            <label class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
+    </div>
+    <div>
+        <label>Ngày sinh:</label>
+            <input class="form-control" type="date" th:field="*{birthday}">
+            <label class="text-danger" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></label>
+    </div>
+<!--    <div>-->
+<!--        <label>Giới tính:</label>-->
+<!--            <select class="form-control" th:field="*{gender}">-->
+<!--                <option th:value="Nam" th:utext="Nam"></option>-->
+<!--                <option th:value="Nữ" th:utext="Nữ"></option>-->
+<!--                <option th:value="Khác" th:utext="Khác"></option>-->
+<!--            </select>-->
+<!--    </div>-->
+    <div>
+        <label>Số CMND:</label>
+            <input class="form-control" type="text" th:field="*{idCard}">
+            <label class="text-danger" th:if="${#fields.hasErrors('idCard')}" th:errors="*{idCard}"></label>
+    </div>
+    <div>
+        <label>Lương :</label>
+        <input class="form-control" type="text" th:field="*{salary}">
+        <label class="text-danger" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></label>
+    </div>
+    <div>
+        <label >Số điện thoại:</label>
+            <input class="form-control" type="text" th:field="*{phone}">
+            <label class="text-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></label>
+    </div>
+    <div>
+        <label>Email:</label>
+            <input class="form-control" type="text" th:field="*{email}">
+            <label class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></label>
+    </div>
+    <div>
+        <label>Địa chỉ:</label>
+            <input class="form-control" type="text" th:field="*{address}">
+            <label class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></label>
+    </div>
+    <div>
+        <label>Division:</label>
+        <label>
+            <select class="form-control" th:field="*{division}">
+                <option th:each="cusType : ${divisionList}" th:value="${cusType.id}"
+                        th:utext="${cusType.name}"></option>
+            </select>
+        </label>
+    </div>
+    <div>
+        <label>Position:</label>
+        <label>
+            <select class="form-control" th:field="*{position}">
+                <option th:each="cusType : ${positionList}" th:value="${cusType.id}"
+                        th:utext="${cusType.name}"></option>
+            </select>
+        </label>
+    </div>
+    <div>
+        <label>Education Degree:</label>
+        <label>
+            <select class="form-control" th:field="*{educationDegree}">
+                <option th:each="cusType : ${educationDegreeList}" th:value="${cusType.id}"
+                        th:utext="${cusType.name}"></option>
+            </select>
+        </label>
+    </div>
+
+    <div>
+        <label>Education Degree:</label>
+        <label>
+            <select class="form-control" th:field="*{user}">
+                <option th:each="cusType : ${userList}" th:value="${cusType.userId}"
+                        th:utext="${cusType.userName}"></option>
+            </select>
+        </label>
+    </div>
+    <input type="submit" value="Save"/>
+</form>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>

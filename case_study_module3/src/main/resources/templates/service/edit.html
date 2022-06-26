@@ -1,0 +1,81 @@
+!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>CHỈNH SỬA THÔNG TIN NhÂN VIÊN</h3>
+<div id="form">
+    <form th:action="@{/service/update}" method="post" th:object="${employee}">
+        <div>
+            <label>ID:</label>
+            <input  type="text" th:field="*{id}">
+            <label th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></label>
+            </label>
+        </div>
+        <div>
+            <label>Name:</label>
+            <input  type="text" th:field="*{name}">
+            <label class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
+        </div>
+        <div>
+            <label>AREA:</label>
+            <input class="form-control" type="date" th:field="*{serviceArea}">
+            <label class="text-danger" th:if="${#fields.hasErrors('serviceArea')}" th:errors="*{serviceArea}"></label>
+        </div>
+        <div>
+            <label>COST</label>
+            <input class="form-control" type="text" th:field="*{serviceCost}">
+            <label class="text-danger" th:if="${#fields.hasErrors('serviceCost')}" th:errors="*{serviceCost}"></label>
+        </div>
+        <div>
+            <label>Max People</label>
+            <input class="form-control" type="text" th:field="*{serviceMaxPeople}">
+            <label class="text-danger" th:if="${#fields.hasErrors('serviceMaxPeople')}" th:errors="*{serviceMaxPeople}"></label>
+        </div>
+        <div>
+            <label >Standard Room:</label>
+            <input class="form-control" type="text" th:field="*{serviceStandardRoom}">
+            <label class="text-danger" th:if="${#fields.hasErrors('serviceStandardRoom')}" th:errors="*{serviceStandardRoom}"></label>
+        </div>
+        <div>
+            <label>Description Other Convenience:</label>
+            <input class="form-control" type="text" th:field="*{descriptionOtherConvenience}">
+            <label class="text-danger" th:if="${#fields.hasErrors('descriptionOtherConvenience')}" th:errors="*{descriptionOtherConvenience}"></label>
+        </div>
+        <div>
+            <label>Service Pool Area:</label>
+            <input class="form-control" type="text" th:field="*{servicePoolArea}">
+            <label class="text-danger" th:if="${#fields.hasErrors('servicePoolArea')}" th:errors="*{servicePoolArea}"></label>
+        </div>
+        <div>
+            <label>Service Number Of Floors:</label>
+            <input class="form-control" type="text" th:field="*{serviceNumberOfFloors}">
+            <label class="text-danger" th:if="${#fields.hasErrors('serviceNumberOfFloors')}" th:errors="*{serviceNumberOfFloors}"></label>
+        </div>
+        <div>
+            <label>Rent Type:</label>
+            <label>
+                <select class="form-control" th:field="*{rentType}">
+                    <option th:each="cusType : ${rentTypeList}" th:value="${cusType.id}"
+                            th:utext="${cusType.name}"></option>
+                </select>
+            </label>
+        </div>
+        <div>
+            <label>Service Type:</label>
+            <label>
+                <select class="form-control" th:field="*{serviceType}">
+                    <option th:each="cusType : ${serviceTypeList}" th:value="${cusType.id}"
+                            th:utext="${cusType.name}"></option>
+                </select>
+            </label>
+        </div>
+        <input type="submit" value="Edit"/>
+    </form>
+</div>
+<div th:replace="~{/layout::footer}">
+</div>
+</body>
+</html>

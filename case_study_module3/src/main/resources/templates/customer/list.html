@@ -1,0 +1,63 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+    <title>Home Page</title>
+</head>
+<body>
+<p>
+    <a th:href="@{/customer/create}">Add new product</a>
+</p>
+<table id="products">
+    <thead>
+    <tr>
+        <td>Mã khách hàng</td>
+        <td>Hạng khách</td>
+        <td>Họ tên</td>
+        <td>Ngày sinh</td>
+        <td>Giới tính</td>
+        <td>CCCD</td>
+        <td>Số điện thoại</td>
+        <td>Email</td>
+        <td>Địa chỉ</td>
+        <td>Chi tiết</td>
+        <td>Chỉnh sửa</td>
+        <td>Xóa</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="customer : ${customerList}">
+        <td th:text="${customer.id}"></td>
+        <td th:text="${customer.customerType.name}"></td>
+        <td th:text="${customer.name}"></td>
+        <td th:text="${customer.birthday}"></td>
+        <td th:text="${customer.gender}"></td>
+        <td th:text="${customer.idCard}"></td>
+        <td th:text="${customer.phone}"></td>
+        <td th:text="${customer.email}"></td>
+        <td th:text="${customer.address}"></td>
+        <td class="text-center"><a class="btn success"
+                                   th:href="@{/customer/view/{id}(id=${customer.id})}">Xem</a></td>
+
+        <td class="text-center"><a class="btn btn-primary" th:href="@{/customer/{id}/edit(id=${customer.id})}">Sửa</a>
+        </td>
+
+        <td class="text-center"><a class="btn btn-danger" th:href="@{/customer/delete/{id}(id=${customer.id})}"
+                                   onclick="return confirm('Bạn muốn xóa khách hàng này không?')">Xóa</a></td>
+    </tr>
+    </tbody>
+</table>
+<div>
+    <span>
+        <a th:if="${customerList.hasPrevious()}" th:href="@{/customer(page = ${customerList.number - 1})}">Previous</a>
+    </span>
+    <span th:each="pageNo: ${#numbers.sequence(0,customerList.totalPages - 1)}">
+        <a th:href="@{/blog(page = ${pageNo})}" th:text="${pageNo}"></a>
+    </span>
+    <span>
+        <a th:if="${customerList.hasNext()}" th:href="@{/customer(page = ${customerList.number +1})}">Next</a>
+    </span>
+</div>
+<div th:replace="~{/layout::footer}">
+</div>
+</div>
+</body>
+</html>
