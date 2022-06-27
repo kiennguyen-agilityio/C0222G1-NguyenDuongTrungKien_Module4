@@ -1,0 +1,38 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout::head">
+    <meta charset="UTF-8">
+    <title>Library</title>
+</head>
+<body>
+<div >
+<h3>Thêm sách mới</h3>
+<a class="btn btn-outline-secondary" href="/">Trang chủ</a>
+<a class="btn btn-outline-secondary" href="/books">Danh mục sách</a>
+<hr>
+<form method="post" th:object="${book}" th:action="@{/book/save}">
+    <div>
+        <label>Tên sách: </label>
+        <input type="text" th:field="*{name}">
+        <label th:if="${#fields.hasErrors()}" th:errors="*{name}"></label>
+    </div>
+    <div>
+        <label>Tác giả: </label>
+        <input type="text" th:field="*{author}">
+        <label th:if="${#fields.hasErrors()}" th:errors="*{author}"></label>
+    </div>
+    <div>
+        <label>ngày ra mắt </label>
+        <input type="date" th:field="*{date}">
+        <label th:if="${#fields.hasErrors()}" th:errors="*{date}"></label>
+    </div>
+    <div>
+        <label>Số lượng:</label>
+        <input type="text" th:field="*{amount}">
+        <label th:if="${#fields.hasErrors()}" th:errors="*{amount}"></label>
+    </div>
+
+    <input type="submit" value="Submit">
+</form>
+</div>
+</body>
+</html>

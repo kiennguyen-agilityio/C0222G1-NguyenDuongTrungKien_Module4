@@ -10,7 +10,7 @@
     <thead>
     <tr>
         <th>id</th>
-        <th >Name</th>
+        <th>Name</th>
         <th>Birthday</th>
         <th >ID Card</th>
         <th>Salary</th>
@@ -21,12 +21,14 @@
         <th >Degree</th>
         <th >Division</th>
         <th>Username</th>
-        <th >Edit</th>
+        <th>View</th>
+        <th>Edit</th>
         <th>Delete</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="employee: ${employeeList}">
+        <td th:text="${employee.id}"></td>
         <td th:text="${employee.name}"></td>
         <td th:text="${employee.birthday}"></td>
         <td th:text="${employee.idCard}"></td>

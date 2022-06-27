@@ -1,0 +1,27 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout::head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="products">
+    <h3>Danh mục thẻ mượn sách</h3>
+    <a th:href="@{/}">Trang chủ</a>
+    <table>
+        <tr>
+            <td>Mã thẻ</td>
+            <td>Mã sách</td>
+            <td>Tên sách</td>
+            <td></td>
+        </tr>
+        <tr th:each="borrow : ${borrowBook}">
+            <td th:text="${borrow.id}"></td>
+            <td th:text="${borrow.book.id}"></td>
+            <td th:text="${borrow.book.name}"></td>
+            <td><a class="btn btn-outline-success" th:href="@{/borrow/view/{id}(id= ${borrow.id})}">Chi
+                tiết</a></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout::head">
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<div>
+    <h3> chào mừng đến với thư viên codegym </h3>
+    <a th:href="@{/books}"> Danh mục sách </a>
+    <a th:href="@{/borrow/list}"> Danh mục thẻ mượn</a>
+</div>
+</body>
+</html>
