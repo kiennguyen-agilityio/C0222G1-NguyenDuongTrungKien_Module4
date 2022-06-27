@@ -4,10 +4,10 @@
     <title>Title</title>
 </head>
 <body>
-<div class="container">
+<div >
     <h3>Thông tin sách</h3>
-    <a class="btn btn-outline-secondary" th:href="@{/}">Trang chủ</a>
-    <a class="btn btn-outline-secondary" th:href="@{/books}">Danh mục sách</a>
+    <a th:href="@{/}">Trang chủ</a>
+    <a th:href="@{/books}">Danh mục sách</a>
     <th:block th:if="${message != null}">
         <hr>
         <h4 th:text="${message}"></h4>

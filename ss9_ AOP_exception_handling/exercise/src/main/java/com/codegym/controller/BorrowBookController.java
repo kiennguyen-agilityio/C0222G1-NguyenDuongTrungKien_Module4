@@ -27,6 +27,10 @@ public class BorrowBookController {
         model.addAttribute("borrowBook", borrowBookService.findAll());
         return "borrow/list";
     }
+    @GetMapping("/borrow/view/{id}")
+    public ModelAndView viewBorrowCard(@PathVariable int id) {
+        return new ModelAndView("borrow/detail", "borrowBook", borrowBookService.findById(id));
+    }
 
     @GetMapping("/borrow/{id}")
     public String borrowBook(@PathVariable int id, RedirectAttributes redirectAttributes) throws BookException {
