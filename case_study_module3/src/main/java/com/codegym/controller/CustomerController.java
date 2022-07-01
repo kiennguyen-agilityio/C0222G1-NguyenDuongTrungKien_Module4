@@ -29,7 +29,7 @@ public class CustomerController {
     @GetMapping("")
     public String showList(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
         Sort sort = Sort.by("name").ascending();
-        model.addAttribute("customerList", service.findAll(PageRequest.of(page, 7, sort)));
+        model.addAttribute("customerList", service.findAll(PageRequest.of(page, 1, sort)));
         return "customer/list";
     }
 

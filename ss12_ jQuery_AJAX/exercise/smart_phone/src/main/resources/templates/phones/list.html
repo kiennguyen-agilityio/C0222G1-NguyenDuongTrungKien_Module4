@@ -47,6 +47,7 @@
                         '        <td>Model</td>\n' +
                         '        <td>Price</td>\n' +
                         '        <td>Delete</td>\n' +
+                        '        <td>Edit</td>\n' +
                         '    </tr>';
                     for (let i = 0; i < data.length; i++) {
                         content += getSmartphone(data[i]);
@@ -55,24 +56,36 @@
                 }
             });
         }
+        function getSmartphone(smartphone) {
+            return `<tr>
+                <td >${smartphone.producer}</td>
+                <td >${smartphone.model}</td>
+                <td >${smartphone.price}</td>
+                <td><a class="deleteSmartphone" href="${smartphone.id}">Delete</a></td>
+            <td><a class="editPhone" href="${smartphone.id}">Edit</a></td>
+               </tr>`;
+        }
 
         //edit
         $(document).ready(function () {
-            $("#phoneList").on("click",".editPhone", function (event) {
+            $("#smartphoneList").on("click", ".editPhone", function (event) {
                 //lay du lieu
                 let a = $(this);
                 let id = a.attr("href");
                 // goi ajax
+debugger
                 $.ajax({
-                    type: "GET",
+                    type: "POST",
                     //tên API
-                    url: `/api/phones/${id}`,
+                    url: `/smartphones/edit/${id}`,
+
                     //xử lý khi thành công
-                    success: function (data) {
-                        document.getElementById('id').value = data.id;
-                        document.getElementById('producer').value = data.producer;
-                        document.getElementById('model').value = data.model;
-                        document.getElementById('price').value = data.price;
+                    success: function (smartphone) {
+                        debugger
+                        document.getElementById('id').value = smartphone.id;
+                        document.getElementById('producer').value = smartphone.producer;
+                        document.getElementById('model').value = smartphone.model;
+                        document.getElementById('price').value = smartphone.price;
                         editPhone();
                     }
                 });
@@ -100,18 +113,14 @@
                 },
                 type: "PUT",
                 data: JSON.stringify(newPhone),
-                url: `/api/phones/${id}`,
+                url: `/smartphones/edit`,
                 success: successHandler
 
             });
             event.preventDefault();
         }
 
-        function getSmartphone(smartphone) {
-            return `<tr><td >${smartphone.producer}</td><td >${smartphone.model}</td><td >${smartphone.price}</td>` +
-                `<td><a class="deleteSmartphone" href="${smartphone.id}">Delete</a></td></tr>`;
-                `<td><a class="editSmartphone" href="${smartphone.id}">Edit</a></td></tr>`;
-        }
+
 
         //delete
         $(document).ready(function () {
@@ -135,11 +144,17 @@
                 event.preventDefault();
             });
         })
+        // $('#smartphoneList').on("click", ".deleteSmartphone", function (event) {
+
     </script>
 </head>
 <body>
 <form id="add-smartphone">
     <table>
+        <tr>
+            <td>id</td>
+            <td><input type="text" id="id" placeholder="id" readonly></td>
+        </tr>
         <tr>
             <td>Producer:</td>
             <td><input type="text" id="producer" placeholder="producer"></td>
@@ -157,6 +172,7 @@
             <td><input type="submit" value="Add" onclick="addNewSmartPhone()"></td>
         </tr>
     </table>
+    <h3 id="id1"></h3>
 </form>
 <h1>Smartphone List</h1>
 <table id="smartphoneList">
@@ -173,7 +189,7 @@
             <td th:text="${smartphone.model}"></td>
             <td th:text="${smartphone.price}"></td>
             <td><a class="deleteSmartphone" th:href="${smartphone.getId()}">Delete</a></td>
-            <td><a class="updateSmartphone" th:href="${smartphone.getId()}">Edit</a></td>
+            <td><a class="editPhone" th:href="${smartphone.getId()}">Edit</a></td>
         </tr>
     </th:block>
 </table>

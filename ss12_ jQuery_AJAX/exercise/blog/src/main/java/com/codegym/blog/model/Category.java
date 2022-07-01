@@ -1,41 +1,52 @@
 package com.codegym.blog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "category")
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    @Column(name = "category_name")
-    private String categoryName;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String name;
+
     @OneToMany(mappedBy = "category")
-    private List<BlogModel> blogModels;
+    @JsonIgnore
+    private Set<Blog> blogs;
 
     public Category() {
     }
 
-    public Category(int id, String categoryName, List<BlogModel> blogModels) {
+    public Category(Integer id, String name) {
         this.id = id;
-        this.categoryName = categoryName;
-//        this.blogModels = blogModels;
+        this.name = name;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public String getName() {
+        return name;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<Blog> getBlogs() {
+        return blogs;
+    }
+
+    public void setBlogs(Set<Blog> blogs) {
+        this.blogs = blogs;
     }
 }

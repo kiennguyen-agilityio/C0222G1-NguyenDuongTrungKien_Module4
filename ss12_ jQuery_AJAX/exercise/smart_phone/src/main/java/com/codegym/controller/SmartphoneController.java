@@ -44,12 +44,15 @@ public class SmartphoneController {
     }
 
     @PostMapping("/edit/{id}")
-    public ResponseEntity<Smartphone> editPhone(@PathVariable Long id,@RequestBody Smartphone smartphone) {
+    public ResponseEntity<Smartphone> editPhone(@PathVariable Long id) {
         Optional<Smartphone> smartphoneOptional = smartphoneService.findById(id);
-        if (smartphone==null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        smartphone.setId(smartphoneOptional.get().getId());
-        return new ResponseEntity<>(smartphoneService.save(smartphone), HttpStatus.OK);
+      Smartphone smartphone =  smartphoneOptional.get();
+        return new ResponseEntity<>(smartphone, HttpStatus.OK);
     }
+    @PutMapping("/edit")
+    public ResponseEntity<?> editPhone(@RequestBody Smartphone smartphone) {
+      smartphoneService.save(smartphone);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+//    /smartphones/edit/${id}
 }

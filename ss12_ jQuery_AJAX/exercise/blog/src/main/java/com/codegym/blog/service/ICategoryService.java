@@ -1,11 +1,22 @@
 package com.codegym.blog.service;
 
 import com.codegym.blog.model.Category;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ICategoryService {
     List<Category> findAll();
-    Category findById(Integer id);
 
+    Page<Category> findAll(Pageable pageble);
+
+    void save(Category category);
+
+    Optional<Category> findById(Integer id);
+
+    void update(Category category);
+
+    void remove(Category category);
 }

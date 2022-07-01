@@ -1,37 +1,41 @@
 package com.codegym.blog.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity(name = "blog")
-public class BlogModel {
+public class Blog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    private int id;
+    private Integer id;
     private String title;
+    @Column(columnDefinition = "LONGTEXT")
     private String content;
-    @Column(name = "create_date", columnDefinition = "Date")
-    private String createDate;
-    @ManyToOne
-    @JoinColumn(name = "category_id")
+    @Column(columnDefinition = "DATE")
+    private String creatingDate;
+
+    @ManyToOne(targetEntity = Category.class)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Category category;
 
-    public BlogModel() {
+    public Blog() {
     }
 
-    public BlogModel(int id, String title, String content, String createDate, Category category) {
+    public Blog(Integer id, String title, String content, String creatingDate) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.createDate = createDate;
-        this.category = category;
+        this.creatingDate = creatingDate;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -51,12 +55,12 @@ public class BlogModel {
         this.content = content;
     }
 
-    public String getCreateDate() {
-        return createDate;
+    public String getCreatingDate() {
+        return creatingDate;
     }
 
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
+    public void setCreatingDate(String creatingDate) {
+        this.creatingDate = creatingDate;
     }
 
     public Category getCategory() {

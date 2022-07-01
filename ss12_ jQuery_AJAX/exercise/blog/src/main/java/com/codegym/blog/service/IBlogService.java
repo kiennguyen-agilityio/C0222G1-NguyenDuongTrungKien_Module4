@@ -1,26 +1,27 @@
 package com.codegym.blog.service;
 
-import com.codegym.blog.model.BlogModel;
+import com.codegym.blog.model.Blog;
+import com.codegym.blog.model.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface IBlogService {
-    Page<BlogModel> findAll(Pageable pageable);
+    Page<Blog> findAll(Pageable pageble);
 
-    Page<BlogModel> findAllByCategory(int category_id, Pageable pageable);
+    void save(Blog blog);
 
-    Page<BlogModel> findBlogsByTitleContainsOrContentContains(String title, String content, Pageable pageable);
+    Blog findById(int id);
 
-    List<BlogModel> findAll();
+    void update(Blog blog);
 
-    List<BlogModel> findAllByCategory(int category_id);
+    void remove(Integer id);
 
-    BlogModel findById(int id);
+    Page<Blog> searchByName(String title, String categoryName, Pageable pageble);
 
-    BlogModel save(BlogModel blog);
+    List<Blog> findAllByCategoryContaining(Category category);
 
-    Page<BlogModel> findAllByTitleContains(String title, Pageable pageable);
+    List<Blog> searchByTitle (String title);
 
 }

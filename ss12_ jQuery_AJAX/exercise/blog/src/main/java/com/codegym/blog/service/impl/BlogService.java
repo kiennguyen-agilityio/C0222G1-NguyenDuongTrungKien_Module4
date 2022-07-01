@@ -1,6 +1,7 @@
 package com.codegym.blog.service.impl;
 
-import com.codegym.blog.model.BlogModel;
+import com.codegym.blog.model.Blog;
+import com.codegym.blog.model.Category;
 import com.codegym.blog.repository.IBlogRepository;
 import com.codegym.blog.service.IBlogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,47 +14,45 @@ import java.util.List;
 @Service
 public class BlogService implements IBlogService {
     @Autowired
-    private IBlogRepository blogRepository;
-
+    private IBlogRepository iBlogRepository;
 
     @Override
-    public Page<BlogModel> findAll(Pageable pageable) {
-        return blogRepository.findAll(pageable);
+    public Page<Blog> findAll(Pageable pageble) {
+        return iBlogRepository.findAll(pageble);
     }
 
     @Override
-    public Page<BlogModel> findAllByCategory(int category_id, Pageable pageable) {
-        return blogRepository.findAllByCategory_Id(category_id,pageable);
+    public void save(Blog blog) {
+        iBlogRepository.save(blog);
     }
 
     @Override
-    public Page<BlogModel> findBlogsByTitleContainsOrContentContains(String title, String content, Pageable pageable) {
-        return null;
+    public Blog findById(int id) {
+        return iBlogRepository.findById(id);
     }
 
     @Override
-    public List<BlogModel> findAll() {
-        return blogRepository.findAll();
+    public void update(Blog blog) {
+        iBlogRepository.update(blog.getTitle(), blog.getContent(), blog.getCreatingDate(), blog.getId());
     }
 
     @Override
-    public List<BlogModel> findAllByCategory(int category_id) {
-        return blogRepository.findAllByCategory_Id(category_id);
+    public void remove(Integer id) {
+        iBlogRepository.remove(id);
     }
 
     @Override
-    public BlogModel findById(int id) {
-        return blogRepository.findById(id).orElse(null);
+    public Page<Blog> searchByName(String title, String categoryId, Pageable pageble) {
+        return iBlogRepository.searchByName("%" + title + "%", "%" + categoryId + "%", pageble);
     }
 
     @Override
-    public BlogModel save(BlogModel blog) {
-        return blogRepository.save(blog);
+    public List<Blog> findAllByCategoryContaining(Category category) {
+        return iBlogRepository.findAllByCategoryContaining(category);
     }
 
     @Override
-    public Page<BlogModel> findAllByTitleContains(String title, Pageable pageable) {
-        return blogRepository.findBlogsByTitleContains(title,pageable);
+    public List<Blog> searchByTitle(String title) {
+        return iBlogRepository.searchByTitle(title);
     }
-
 }

@@ -1,11 +1,64 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<meta charset="UTF-8">
-<title>Home</title>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#formSearch").on("click", "#abc", function (event) {
+                let title = $("#search").val();
+                $.ajax({
+                    url: `api/blog/search/${title}`,
+                    type: "GET",
+                    success: function (blogList) {
+                        console.log(blogList)
+                        let content = ""
+
+                        for (let i = 0; i < blogList.length; i++) {
+                            content += getBlog(blogList[i])
+                        }
+                        document.getElementById("body").innerHTML = content
+                    }
+                })
+                console.log("lỗi")
+                event.preventDefault();
+            })
+            var size = 2;
+            $("#load").on("click", "#loadPage", function (event) {
+                size++;
+                $.ajax({
+                    url: `api/blog/load/${size}`,
+                    type: "GET",
+                    success: function (blogPage) {
+                        let content = ""
+
+                        for (let i = 0; i < blogPage.length; i++) {
+                            content += getBlog(blogPage[i])
+                        }
+                        document.getElementById("body").innerHTML = content
+                    }
+                })
+                console.log("lỗi")
+                event.preventDefault();
+            })
+
+            function getBlog(blog) {
+                return `<tr>
+                <td >${blog.id}</td>
+                <td >${blog.title}</td>
+                <td >${blog.content}</td>
+                <td >${blog.creatingDate}</td>
+                <td >${blog.category}</td>
+            <td><a class="deleteSmartphone" href="${blog.id}">Read</a></td>
+            <td><a class="deleteSmartphone" href="${blog.id}">Delete</a></td>
+        <td><a class="editSmartphone" href="${blog.id}">Edit</a></td>
+       </tr>`;
+            }
+        });
+    </script>
 </head>
 <body>
-
 <h3>Blog List </h3>
 <p>
     <a th:href="@{/create}">Create new blog </a>
@@ -15,10 +68,13 @@
         <span th:text="${success}"></span>
     </div>
 </div>
-<<div class="form-inline my-2 my-lg-0">
-    <input type="search" placeholder="Search" aria-label="Search" id="search">
-    <button  id="submitSearch">Search</button>
-</div>
+
+<form id="formSearch">
+    <input type="text" id="search">
+    <input type="button" value="Search" id="abc">
+</form>
+
+
 <table id="product">
     <thead>
     <tr>
@@ -30,63 +86,34 @@
         <th colspan="3">Action</th>
     </tr>
     </thead>
-    <tbody>
-    <tr th:each="blog ,countBlog : ${list}">
-        <td th:text="${countBlog.count}"></td>
-        <td th:text="${blog.title}"></td>
-        <td th:text="${blog.content}"></td>
-        <td th:text="${blog.createDate}"></td>
-        <td th:text="${blog.category.categoryName}"></td>
-        <td><a th:href="@{/{id}/edit(id=${blog.id})}"> edit </a></td>
-        <td><a th:href="@{/{id}/delete(id=${blog.getId()})}">delete</a></td>
-        <td><a th:href="@{/{id}/read(id=${blog.getId()})}">Read</a></td>
+    <tbody id="body">
+    <tr th:each="row,rowStat : ${blogList}">
+        <td th:text="${rowStat.count}"></td>
+        <td th:text="${row.getTitle()}"></td>
+        <td th:text="${row.getCreatingDate()}"></td>
+        <td th:text="${row.getCategory.getName()}"></td>
+        <td><a th:href="@{/blog/{id}/read(id=${row.getId()})}">Read</a></td>
+        <td><a th:href="@{/blog/{id}/edit(id=${row.getId()})}">Edit</a></td>
+        <td>
+            <a th:href="@{/blog/{id}/delete(id=${row.getId()})}">Delete</a>
+        </td>
     </tr>
     </tbody>
 </table>
+<div id="load">
+    <button id="loadPage"> Xem Thêm</button>
+</div>
 <div>
     <span>
-        <a th:if="${list.hasPrevious()}" th:href="@{/blog(page = ${list.number - 1})}">Previous</a>
+        <a th:if="${blogList.hasPrevious()}" th:href="@{/blog(page = ${blogList.number - 1})}">Previous</a>
     </span>
-    <span th:each="pageNo: ${#numbers.sequence(0,list.totalPages - 1)}">
+    <span th:each="pageNo: ${#numbers.sequence(0,blogList.totalPages - 1)}">
         <a th:href="@{/blog(page = ${pageNo})}" th:text="${pageNo}"></a>
     </span>
     <span>
-        <a th:if="${list.hasNext()}" th:href="@{/blog(page = ${list.number +1})}">Next</a>
+        <a th:if="${blogList.hasNext()}" th:href="@{/blog(page = ${blogList.number +1})}">Next</a>
     </span>
 </div>
 </body>
-<script  type="text/javascript">
-    $(document).ready(function () {
-        $('#submitSearch').click(function (event) {
-            let search = $("#search").val();
-            $.ajax({
-                url: "/search",
-                type: "GET",
-                data: {"search" : search},
-                dataType: "HTML",
-                success :function (data) {
-                    $("#result").html(data);
-                }
-            })
-            // event.preventDefault();
-        })
 
-        $('#loadMore').click(function (event) {
-            let search = $("#search").val();
-            let page = $("#page").val();
-            $.ajax({
-                url: "/search",
-                type: "GET",
-                data: {"search" : search,
-                    "page" : page },
-                dataType: "HTML",
-                success :function (data) {
-                    $("#result").html(data);
-                }
-            })
-            // event.preventDefault();
-        })
-
-    })
-</script>
 </html>
