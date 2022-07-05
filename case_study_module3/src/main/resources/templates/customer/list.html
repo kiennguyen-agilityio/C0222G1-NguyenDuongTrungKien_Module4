@@ -1,5 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/layout :: head">
+<head >
     <title>Home Page</title>
 </head>
 <body>
@@ -22,6 +22,7 @@
         <td>Chỉnh sửa</td>
         <td>Xóa</td>
     </tr>
+
     </thead>
     <tbody>
     <tr th:each="customer : ${customerList}">
@@ -34,6 +35,7 @@
         <td th:text="${customer.phone}"></td>
         <td th:text="${customer.email}"></td>
         <td th:text="${customer.address}"></td>
+
         <td class="text-center"><a class="btn success"
                                    th:href="@{/customer/view/{id}(id=${customer.id})}">Xem</a></td>
 

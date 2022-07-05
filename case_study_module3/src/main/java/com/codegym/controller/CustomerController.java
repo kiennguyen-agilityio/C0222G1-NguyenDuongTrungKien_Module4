@@ -29,15 +29,10 @@ public class CustomerController {
     @GetMapping("")
     public String showList(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
         Sort sort = Sort.by("name").ascending();
-        model.addAttribute("customerList", service.findAll(PageRequest.of(page, 1, sort)));
-        return "customer/list";
-    }
-
-    @GetMapping("/create")
-    public String showCreationForm(Model model){
+        model.addAttribute("customerList", service.findAll(PageRequest.of(page, 10, sort)));
         model.addAttribute("customerTypeList", customerTypeService.findAll());
         model.addAttribute("customer", new Customer());
-        return "customer/create";
+        return "customer/list_customer";
     }
 
     @PostMapping("/save")

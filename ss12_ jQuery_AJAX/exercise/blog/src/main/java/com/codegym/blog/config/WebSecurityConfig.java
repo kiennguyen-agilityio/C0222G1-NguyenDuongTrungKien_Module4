@@ -1,4 +1,5 @@
 package com.codegym.blog.config;
+
 import com.codegym.blog.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -32,15 +33,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().antMatchers("/", "/login", "/logout").permitAll();
 
+        http.authorizeRequests()
+                .antMatchers("/blog/show")
+                .access("hasAnyRole('ROLE_USER')");
+
+        http.authorizeRequests()
+                .antMatchers("/blog/*")
+                .access("hasRole('ROLE_ADMIN')");
+
+        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
         // Cấu hình cho Login Form.
         http.authorizeRequests().and().formLogin()//
                 // Submit URL của trang login
-//                .loginProcessingUrl("/j_spring_security") // Submit URL
+                .loginProcessingUrl("/j_spring_security") // Submit URL
 //                .loginPage("/login")//
-                .defaultSuccessUrl("/blog")// đăng nhập thành công -> call 1 request /userInfo
+                .defaultSuccessUrl("/blog/show")// đăng nhập thành công -> call 1 request /userInfo
                 .failureUrl("/login?error=true")// đăng nhập thất bại -> /login?error = true
-//                .usernameParameter("username")//
-//                .passwordParameter("password")
+                .usernameParameter("username")//
+                .passwordParameter("password")
                 // Cấu hình cho Logout Page.
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");
 

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/bootstrap413/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/bootstrap413/css/style.css}"/>
+</head>
+<body>
+
+<!--Form Create-->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNew">Add New Customer
+</button>
+<div class="modal fade bd-example-modal-lg" id="addNew" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="container">
+                <form th:action="@{/customer/save}" method="post" th:object="${customer}">
+                    <div>
+                        <label>Mã khách hàng:</label>
+                        <input type="text" th:field="*{id}">
+                        <label th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></label>
+                        </label>
+                    </div>
+                    <div>
+                        <label>Hạng khách:</label>
+                        <label>
+                            <select class="form-control" th:field="*{customerType}">
+                                <option th:each="cusType : ${customerTypeList}" th:value="${cusType.id}"
+                                        th:utext="${cusType.name}"></option>
+                            </select>
+                        </label>
+                    </div>
+                    <div>
+                        <label>Tên khách hàng:</label>
+                        <input type="text" th:field="*{name}">
+                        <label class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
+                    </div>
+                    <div>
+                        <label>Ngày sinh:</label>
+                        <input class="form-control" type="date" th:field="*{birthday}">
+                        <label class="text-danger" th:if="${#fields.hasErrors('birthday')}"
+                               th:errors="*{birthday}"></label>
+                    </div>
+                    <div>
+                        <label>Giới tính:</label>
+                        <select class="form-control" th:field="*{gender}">
+                            <option th:value="Nam" th:utext="Nam"></option>
+                            <option th:value="Nữ" th:utext="Nữ"></option>
+                            <option th:value="Khác" th:utext="Khác"></option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Số CMND:</label>
+                        <input class="form-control" type="text" th:field="*{idCard}">
+                        <label class="text-danger" th:if="${#fields.hasErrors('idCard')}" th:errors="*{idCard}"></label>
+                    </div>
+                    <div>
+                        <label>Số điện thoại:</label>
+                        <input class="form-control" type="text" th:field="*{phone}">
+                        <label class="text-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></label>
+                    </div>
+                    <div>
+                        <label>Email:</label>
+                        <input class="form-control" type="text" th:field="*{email}">
+                        <label class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></label>
+                    </div>
+                    <div>
+                        <label>Địa chỉ:</label>
+                        <input class="form-control" type="text" th:field="*{address}">
+                        <label class="text-danger" th:if="${#fields.hasErrors('address')}"
+                               th:errors="*{address}"></label>
+                    </div>
+                    <input type="submit" value="Save"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<table class="table table-bordered" id="formEdit">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Mã khách hàng</th>
+        <th scope="col">Hạng khách</th>
+        <th scope="col">Họ tên</th>
+        <th scope="col">Ngày sinh</th>
+        <th scope="col">Giới tính</th>
+        <th scope="col">CCCD</th>
+        <th scope="col">Số điện thoại</th>
+        <th scope="col">Email</th>
+        <th scope="col">Địa chỉ</th>
+        <th scope="col">Chi tiết</th>
+        <th scope="col">Chỉnh sửa</th>
+        <th scope="col">Xóa</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="customer : ${customerList}">
+        <td th:text="${customer.id}"></td>
+        <td th:text="${customer.customerType.name}"></td>
+        <td th:text="${customer.name}"></td>
+        <td th:text="${customer.birthday}"></td>
+        <td th:text="${customer.gender}"></td>
+        <td th:text="${customer.idCard}"></td>
+        <td th:text="${customer.phone}"></td>
+        <td th:text="${customer.email}"></td>
+        <td th:text="${customer.address}"></td>
+        <td></td>
+        <td>
+<!--            class editCustomer phải trùng với  $("#formEdit").on("click", "#editCustomer", function (event)-->
+            <a type="button" class="btn btn-primary editCustomer" data-toggle="modal" data-target="#edit"
+                    th:href="${customer.id}">
+                Chỉnh sửa
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div class="modal fade bd-example-modal-lg" id="edit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <input class="form-control" id="name2" name="name2">
+            <form action="customer/update" method="post">
+                <input type="text" id="id" hidden>
+                <div>
+                    <label>Hạng khách:</label>
+                    <select id="customerType">
+                        <option th:each="cusType : ${customerTypeList}" th:value="${cusType.id}"
+                                th:utext="${cusType.name}"></option>
+                    </select>
+                </div>
+                <div>
+                    <label>Tên khách hàng:</label>
+                    <input class="form-control" id="name" name="name">
+                </div>
+                <div>
+                    <label>Ngày sinh:</label>
+                    <input class="form-control" type="date" id="birthday">
+                </div>
+                <div>
+                    <label>Giới tính:</label>
+                    <select class="form-control" id="gender">
+                        <option th:value="Nam" th:utext="Nam"></option>
+                        <option th:value="Nữ" th:utext="Nữ"></option>
+                        <option th:value="Khác" th:utext="Khác"></option>
+                    </select>
+                </div>
+                <div>
+                    <label>Số CMND:</label>
+                    <input class="form-control" type="text" id="idCard">
+
+                </div>
+                <div>
+                    <label>Số điện thoại:</label>
+                    <input class="form-control" type="text" id="phone">
+
+                </div>
+                <div>
+                    <label>Email:</label>
+
+                    <input class="form-control" type="text" id="email">
+
+                </div>
+                <div>
+                    <label>Địa chỉ:</label>
+                    <input class="form-control" type="text" id="address">
+
+                </div>
+                <input type="submit" value="Edit"/>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+        $("#formEdit").on("click", "#editCustomer", function (event) {
+            let a =$(this);
+            let id = a.attr("href");
+            $.ajax({
+                url: `api/blog/search/${title}`,
+                type: "GET",
+                success: function (blogList) {
+                    console.log(blogList)
+                    let content = ""
+
+                    for (let i = 0; i < blogList.length; i++) {
+                        content += getBlog(blogList[i])
+                    }
+                    document.getElementById("body").innerHTML = content
+                }
+            })
+            console.log("lỗi")
+            event.preventDefault();
+
+            function getInfo(id, customerType, name, birthDay, gender, idCard, phone, email, address) {
+                //"phải gán id cho mỗi thuộc tính của customer trên form edit"
+                document.getElementById("id").value = id;
+                document.getElementById("customerType").value = customerType;
+                document.getElementById("name").value = name;
+                document.getElementById("birthday").value = birthDay;
+                document.getElementById("gender").value = gender;
+                document.getElementById("idCard").value = idCard;
+                document.getElementById("phone").value = phone;
+                document.getElementById("email").value = email;
+                document.getElementById("address").value = address;
+            }
+        })
+
+
+</script>
+<script th:src="@{/bootstrap/jquery/jquery-3.5.1.min.js}"></script>
+<script th:src="@{/bootstrap/bootstrap413/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>
