@@ -52,7 +52,7 @@ public class TicketService implements ITicketService {
     }
 
     @Override
-    public List<Ticket> searchByStartPosition(String startPosition) {
-        return iTicketRepository.searchByStartPosition("%" + startPosition + "%");
+    public Page<Ticket> search(String startPoint, String endPoint, Pageable pageble) {
+        return iTicketRepository.search("%" + startPoint + "%", "%" + endPoint + "%", pageble);
     }
 }

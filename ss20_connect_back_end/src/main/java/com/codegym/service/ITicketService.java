@@ -22,5 +22,4 @@ public interface ITicketService {
 
     void update(Ticket ticket);
 
-    List<Ticket> searchByStartPosition(String startPosition);
-}
+    Page<Ticket> search(String startPoint, String endPoint, Pageable pageble);}

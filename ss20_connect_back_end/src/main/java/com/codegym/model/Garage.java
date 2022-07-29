@@ -1,6 +1,7 @@
 package com.codegym.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -13,7 +14,7 @@ public class Garage {
     private String  name ;
 
     @OneToMany(mappedBy = "garage")
-    @JsonBackReference("garage")
+    @JsonIgnore
     private Set<Ticket> tickets  ;
 
     public Garage() {

@@ -12,6 +12,6 @@ import java.util.List;
 public interface ITicketRepository extends JpaRepository<Ticket, Integer> {
     Page<Ticket> findAll(Pageable pageable);
 
-    @Query(value = "SELECT *  FROM ticket WHERE startPosition LIKE :startPosition ", nativeQuery = true)
-    List<Ticket> searchByStartPosition(@Param("startPosition") String startPosition);
+    @Query(value = "SELECT * FROM ticket WHERE start_position LIKE :startPosition AND end_position LIKE :endPosition", nativeQuery = true)
+    Page<Ticket> search(@Param("startPosition") String startPosition, @Param("endPosition") String endPosition , Pageable pageble);
 }

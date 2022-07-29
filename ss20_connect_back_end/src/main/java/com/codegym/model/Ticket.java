@@ -3,14 +3,16 @@ package com.codegym.model;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "ticket")
 public class Ticket {
     @Id
-    private int id ;
-    private  int price;
-    private   String startPosition;
-    private  String  endPosition;
-    private  String  startDate;
-    private   String  time;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private int price;
+    private String startPosition;
+    private String endPosition;
+    private String startDate;
+    private String time;
 
     @ManyToOne
     @JoinColumn(name = "garage_id")
