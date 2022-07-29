@@ -24,14 +24,6 @@
             <input class="form-control" type="date" th:field="*{birthday}">
             <label class="text-danger" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></label>
     </div>
-<!--    <div>-->
-<!--        <label>Giới tính:</label>-->
-<!--            <select class="form-control" th:field="*{gender}">-->
-<!--                <option th:value="Nam" th:utext="Nam"></option>-->
-<!--                <option th:value="Nữ" th:utext="Nữ"></option>-->
-<!--                <option th:value="Khác" th:utext="Khác"></option>-->
-<!--            </select>-->
-<!--    </div>-->
     <div>
         <label>Số CMND:</label>
             <input class="form-control" type="text" th:field="*{idCard}">

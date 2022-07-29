@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/bootstrap413/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/bootstrap413/css/style.css}"/>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<body>
+
+<!--<form id="formSearch">-->
+<!--    <input type="text" id="search">-->
+<!--    <input type="button" value="Search" id="searchName">-->
+<!--</form>-->
+
+<!--Form Create-->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNew">Add New Customer
+</button>
+<!--<div class="modal fade bd-example-modal-lg" id="addNew" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"-->
+<!--     aria-hidden="true">-->
+<!--    <div class="modal-dialog modal-lg">-->
+<!--        <div class="modal-content">-->
+<!--            <div id="modalCreateBody">-->
+<!--                <label>Mã Khách Hàng:</label>-->
+<!--                <input type="text" id="id">-->
+<!--                <p style="color: red" id="regexId"></p>-->
+
+<!--                <div>-->
+<!--                    <label>Hạng khách:</label>-->
+<!--                    <select id="customerType">-->
+<!--                        <option th:each="cusType : ${customerTypeList}" th:value="${cusType.id}"-->
+<!--                                th:utext="${cusType.name}"></option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label>Tên khách hàng:</label>-->
+<!--                    <input class="form-control" id="name" name="name">-->
+<!--                    <p style="color: red" id="regexName"></p>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label>Ngày sinh:</label>-->
+<!--                    <input class="form-control" type="date" id="birthday">-->
+<!--                    <p style="color: red" id="regexBirthday"></p>-->
+
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label>Giới tính:</label>-->
+<!--                    <select class="form-control" id="gender">-->
+<!--                        <option th:value="Nam" th:utext="Nam"></option>-->
+<!--                        <option th:value="Nữ" th:utext="Nữ"></option>-->
+<!--                        <option th:value="Khác" th:utext="Khác"></option>-->
+<!--                    </select>-->
+<!--                    <p style="color: red" id="regexGender"></p>-->
+
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label>Số CMND:</label>-->
+<!--                    <input class="form-control" type="text" id="idCard">-->
+<!--                    <p style="color: red" id="regexIdCard"></p>-->
+
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label>Số điện thoại:</label>-->
+<!--                    <input class="form-control" type="text" id="phone">-->
+<!--                    <p style="color: red" id="regexPhone"></p>-->
+
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label>Email:</label>-->
+<!--                    <input class="form-control" type="text" id="email">-->
+<!--                    <p style="color: red" id="regexEmail"></p>-->
+
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label>Địa chỉ:</label>-->
+<!--                    <input class="form-control" type="text" id="address">-->
+<!--                    <p style="color: red" id="regexAddress"></p>-->
+
+<!--                </div>-->
+<!--                <input type="button" onclick="addNewCustomer()" value="Add"/>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">STT</th>
+        <th scope="col">Tiêu đề</th>
+        <th scope="col">Loại câu hỏi</th>
+        <th scope="col">Ngày Đăng </th>
+        <th scope="col">Tình trạng</th>
+        <th scope="col">Chỉnh sửa</th>
+        <th scope="col">Xóa</th>
+    </tr>
+    </thead>
+    <tbody id="questionContentList">
+    <tr th:each="question : ${questionContentList}">
+        <td th:text="${question.id}"></td>
+        <td th:text="${question.title}"></td>
+        <td th:text="${question.content}"></td>
+        <td th:text="${question.birthday}"></td>
+        <td th:text="${question.answer}"></td>
+        <td th:text="${question.questionType}"></td>
+        <td th:text="${question.phone}"></td>
+
+        <td>
+            <!--class editCustomer phải trùng với  $("#customerList").on("click", ".editCustomer", function (event)-->
+            <!--            sau khi click vào chỉnh sửa thì sẽ nhảy đến ajax edit để đổ dữ liệu lên form edit-->
+            <a type="button" class="btn btn-primary editCustomer" data-toggle="modal"
+               th:href="${customer.id}">
+                Chỉnh sửa
+            </a>
+        </td>
+
+        <!--class deleteCustomer phải trùng với  $("#customerList").on("click", ".deleteCustomer", function (event)-->
+        <td>
+            <a type="button" class="btn btn-primary deleteCustomer" data-toggle="modal"
+               th:href="${customer.id}">
+                Xóa
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<center>
+    <nav>
+        <ul class="pagination pagination-sm justify-content-center">
+            <li class="page-item">
+                <a class="page-link" th:if="${customerList.hasPrevious()}"
+                   th:href="@{/customer/(page = ${customerList.number - 1})}">Previous</a>
+            </li>
+            <div th:each="pageNo: ${#numbers.sequence(0,customerList.totalPages - 1)}">
+                <li class="page-item" th:if="${customerList.number != pageNo}">
+                    <a class="page-link" th:href="@{/customer/(page = ${pageNo})}" th:text="${pageNo + 1}"></a>
+                </li>
+                <li class="page-item active" th:if="${customerList.number == pageNo}">
+                    <a class="page-link" th:href="@{/customer/(page = ${pageNo})}" th:text="${pageNo + 1}"> </a>
+                </li>
+            </div>
+            <li class="page-item">
+                <a class="page-link" th:if="${customerList.hasNext()}"
+                   th:href="@{/customer/(page = ${customerList.number + 1})}">Next</a>
+            </li>
+        </ul>
+    </nav>
+</center>
+
+<!-- edit modal-->
+<div class="modal fade bd-example-modal-lg" id="editModal" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id="modalEditBody">
+                <input type="text" id="id2">
+                <div>
+                    <label>Hạng khách:</label>
+                    <select id="customerType2">
+                        <option th:each="cusType : ${customerTypeList}" th:value="${cusType.id}"
+                                th:utext="${cusType.name}"></option>
+                    </select>
+                </div>
+                <div>
+                    <label>Tên khách hàng:</label>
+                    <input class="form-control" id="name2" name="name">
+                </div>
+                <div>
+                    <label>Ngày sinh:</label>
+                    <input class="form-control" type="date" id="birthday2">
+                </div>
+                <div>
+                    <label>Giới tính:</label>
+                    <select class="form-control" id="gender2">
+                        <option th:value="Nam" th:utext="Nam"></option>
+                        <option th:value="Nữ" th:utext="Nữ"></option>
+                        <option th:value="Khác" th:utext="Khác"></option>
+                    </select>
+                </div>
+                <div>
+                    <label>Số CMND:</label>
+                    <input class="form-control" type="text" id="idCard2">
+
+                </div>
+                <div>
+                    <label>Số điện thoại:</label>
+                    <input class="form-control" type="text" id="phone2">
+
+                </div>
+                <div>
+                    <label>Email:</label>
+
+                    <input class="form-control" type="text" id="email2">
+
+                </div>
+                <div>
+                    <label>Địa chỉ:</label>
+                    <input class="form-control" type="text" id="address2">
+
+                </div>
+                <input type="button" onclick="editCustomer()" data-dismiss="modal" miss value="Edit"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--delete modal-->
+<div class="modal" tabindex="-1" role="dialog" id="deleteModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <span>Do you want to delete </span><span style="color: blue" id="name3"></span>
+                <input type="hidden" id="id3">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="deleteCustomer()">Delete
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //tạo mới khách hàng//
+    function addNewCustomer() {
+        let id = $('#id').val();
+        let customerType = $('#customerType').val();
+        let name = $('#name').val();
+        let birthday = $('#birthday').val();
+        let gender = $('#gender').val();
+        let idCard = $('#idCard').val();
+        let phone = $('#phone').val();
+        let email = $('#email').val();
+        let address = $('#address').val();
+        debugger
+        //tạo đối tượng từ các biến đã tạo ở trên//
+        let newCustomer = {
+            id: id,
+            customerType: {
+                id: customerType
+            },
+            name: name,
+            birthday: birthday,
+            gender: gender,
+            idCard: idCard,
+            phone: phone,
+            email: email,
+            address: address
+        };
+        debugger
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "POST",
+            data: JSON.stringify(newCustomer),
+            url: `api/customer/save`,
+            success:function () {
+                $('#addNew').modal('hide');
+                successHandler();
+                document.getElementById("id").value = "";
+                document.getElementById("customerType").value = "";
+                document.getElementById("name").value = "";
+                document.getElementById("birthday").value = "";
+                document.getElementById("gender").value = "";
+                document.getElementById("idCard").value = "";
+                document.getElementById("phone").value = "";
+                document.getElementById("email").value = "";
+                document.getElementById("address").value = "";
+            },
+            error:function (data) {
+                if (data.responseJSON.id!=null){
+                    document.getElementById("regexId").innerText=data.responseJSON.id;
+                }else {
+                    document.getElementById("regexId").innerText="";
+                }
+                if (data.responseJSON.name!=null){
+                    document.getElementById("regexName").innerText=data.responseJSON.name;
+                }else {
+                    document.getElementById("regexName").innerText="";
+                }
+
+                if (data.responseJSON.birthday!=null ){
+                    document.getElementById("regexBirthday").innerText=data.responseJSON.birthday;
+                }else {
+                    document.getElementById("regexBirthday").innerText="";
+                }
+
+                if (data.responseJSON.gender!=null){
+                    document.getElementById("regexGender").innerText=data.responseJSON.gender;
+                }else {
+                    document.getElementById("regexGender").innerText="";
+                }
+
+                if (data.responseJSON.idCard!=null){
+                    document.getElementById("regexIdCard").innerText=data.responseJSON.idCard;
+                }else {
+                    document.getElementById("regexIdCard").innerText="";
+                }
+
+                if (data.responseJSON.phone!=null){
+                    document.getElementById("regexPhone").innerText=data.responseJSON.phone;
+                }else {
+                    document.getElementById("regexPhone").innerText="";
+                }
+
+                if (data.responseJSON.email!=null){
+                    document.getElementById("regexEmail").innerText=data.responseJSON.email;
+                }else {
+                    document.getElementById("regexEmail").innerText="";
+                }
+
+                if (data.responseJSON.address!=null){
+                    document.getElementById("regexAddress").innerText=data.responseJSON.address;
+                }else {
+                    document.getElementById("regexAddress").innerText="";
+                }
+            }
+        });
+        event.preventDefault();
+    }
+
+    //edit//
+    //gán id trong form edit không được trùng lặp với create//
+    $(document).ready(function () {
+        $("#customerList").on("click", ".editCustomer", function (event) {
+            debugger
+            let a = $(this);
+            let id = a.attr("href");
+            $.ajax({
+                // đường dẫn tới rest controller để thực hiện việc tìm đối tượng theo id
+                url: `api/customer/edit/${id}`,
+                type: "GET",
+                success: function (customer) {
+                    $('#editModal').modal('show') //gán id cho form tổng edit dùng để show ra dữ liệu
+                    document.getElementById("id2").value = customer.id;
+                    document.getElementById("customerType2").value = customer.customerType.id;
+                    document.getElementById("name2").value = customer.name;
+                    document.getElementById("birthday2").value = customer.birthday;
+                    document.getElementById("gender2").value = customer.gender;
+                    document.getElementById("idCard2").value = customer.idCard;
+                    document.getElementById("phone2").value = customer.phone;
+                    document.getElementById("email2").value = customer.email;
+                    document.getElementById("address2").value = customer.address;
+                }
+            });
+            event.preventDefault();
+        })
+    })
+
+    // function editCustomer() dùng để xử lý việc cập nhật
+    function editCustomer() {
+        // tạo biến mới để hứng dữ liệu được cập nhật
+        let id = $('#id2').val();
+        let customerType = $('#customerType2').val();
+        let name = $('#name2').val();
+        let birthday = $('#birthday2').val();
+        let gender = $('#gender2').val();
+        let idCard = $('#idCard2').val();
+        let phone = $('#phone2').val();
+        let email = $('#email2').val();
+        let address = $('#address2').val();
+
+        //tạo đối tượng từ các biến đã tạo ở trên//
+        let newCustomer = {
+            id: id,
+            customerType: {
+                id: customerType
+            },
+            name: name,
+            birthday: birthday,
+            gender: gender,
+            idCard: idCard,
+            phone: phone,
+            email: email,
+            address: address
+        };
+
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            // gởi đối tượng về restcontroller để xử lí bằng phương thức edit//
+            type: "PUT",
+            data: JSON.stringify(newCustomer),
+            url: `api/customer/edit`,
+            success: successHandler
+
+        });
+        event.preventDefault();
+    }
+
+    //duyệt từng phần tử trong customer để đổ ra 1 danh sách mới sau khi được cập nhật mà không cần load lại trang//
+    function successHandler() {
+        $.ajax({
+            type: "GET",
+            //tên API
+            url: "api/customer",
+            //xử lý khi thành công
+            success: function (customerList) {
+                // hien thi danh sach o day
+                let content = "";
+                for (let i = 0; i < customerList.length; i++) {
+                    content += getCustomer(customerList[i]);
+                }
+                document.getElementById('customerList').innerHTML = content;
+            }
+        });
+    }
+
+    // 1 danh sách khách hàng mới //
+    function getCustomer(customer) {
+        return `<tr>
+                <td >${customer.id}</td>
+                <td >${customer.customerType.id}</td>
+                <td >${customer.name}</td>
+                <td >${customer.birthday}</td>
+                <td >${customer.gender}</td>
+                <td >${customer.idCard}</td>
+                <td >${customer.phone}</td>
+                <td >${customer.email}</td>
+                <td >${customer.address}</td>
+
+            <td> <a type="button" class="btn btn-primary editCustomer" data-toggle="modal" data-target="#edit"
+               href="${customer.id}">
+                Chỉnh sửa
+            </a></td>
+           <td> <a type="button" class="btn btn-primary deleteCustomer" data-toggle="modal" data-target="#deleteModal"
+               href="${customer.id}">
+                Xóa
+            </a></td>
+               </tr>`;
+    }
+
+    //delete
+    // gán id cho từng thuộc tính trong modal delete không dc trùng lặp với edit//
+    // dùng để đổ thông tin lên form delete
+    $(document).ready(function () {
+        //sư kiện nào thực hiện Ajax
+        $('#customerList').on("click", ".deleteCustomer", function (event) {
+            //lay du lieu
+            let a = $(this);
+            let id = a.attr("href");
+            // goi ajax
+            $.ajax({
+                type: "GET",
+                //tên API
+                url: `/api/customer/delete/${id}`,
+                //xử lý khi thành công
+                success: function (data) {
+                    console.log(data)
+                    showInfoDelete(data)
+                    $("#deleteModal").modal("show")
+                }
+            });
+            event.preventDefault();
+        });
+    })
+
+    function showInfoDelete(item) {
+        document.getElementById("id3").value = item.id
+        document.getElementById("name3").innerHTML = item.name + "?"
+    }
+
+    //thực hiện việc xóa//
+    function deleteCustomer() {
+        let id = $('#id3').val();
+        $.ajax({
+            type: "DELETE",
+            //tên API
+            url: `api/customer/delete/${id}`,
+            //xử lý khi thành công
+            success: function (data) {
+                successHandler()
+            }
+        })
+    }
+    //search
+    $(document).ready(function () {
+        $("#formSearch").on("click", "#searchName", function (event) {
+            let name = $("#search").val();
+            $.ajax({
+                url: `api/customer/search/${name}`,
+                type: "GET",
+                success: function (customerList) {
+                    console.log(customerList)
+                    let content = ""
+
+                    for (let i = 0; i < customerList.length; i++) {
+                        content += getCustomer(customerList[i])
+                    }
+                    document.getElementById("customerList").innerHTML = content
+                }
+            })
+            console.log("lỗi")
+            event.preventDefault();
+        })
+    })
+</script>
+<script th:src="@{/bootstrap/jquery/jquery-3.5.1.min.js}"></script>
+<script th:src="@{/bootstrap/bootstrap413/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
