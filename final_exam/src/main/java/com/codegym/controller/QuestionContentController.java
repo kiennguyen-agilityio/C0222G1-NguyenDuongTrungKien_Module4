@@ -25,13 +25,13 @@ public class QuestionContentController {
     private QuestionTypeService questionTypeService;
 
     @ModelAttribute("questionType")
-    public List<QuestionType> getCustomerTypes() {
+    public List<QuestionType> getQuestionTypes() {
         return questionTypeService.findAll();
     }
 
     @GetMapping("")
     public String showList(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
-        Sort sort = Sort.by("name").ascending();
+        Sort sort = Sort.by("title").ascending();
         model.addAttribute("questionContentList", questionContentService.findAll(PageRequest.of(page, 3, sort)));
         model.addAttribute("questionTypeList", questionTypeService.findAll());
         model.addAttribute("questionContent", new QuestionContent());

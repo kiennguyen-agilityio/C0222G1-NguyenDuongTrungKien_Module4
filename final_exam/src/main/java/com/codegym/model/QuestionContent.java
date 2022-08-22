@@ -7,114 +7,93 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Entity
-@Table(name = "customer")
-public class    Customer {
+@Table(name = "question_content")
+public class QuestionContent {
     @Id
-    @Pattern(regexp = "^KH-[0-9]{4}$", message = "Phải đúng định dạng KH-XXXX")
-    private String id;
+//    @Pattern(regexp = "^KH-[0-9]{4}$", message = "Phải đúng định dạng KH-XXXX")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    @NotBlank(message = "Không để trống")
-    private String name;
+    //    @NotBlank(message = "Không để trống")
+    private String title;
 
-    @NotNull(message = "Không để trống")
-//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-//    @Pattern(message = "Chỉ nhập ngày trong quá khứ")
-    private String birthday;
+//    @NotNull(message = "Không để trống")
+    private String content;
 
-    @NotNull (message = "Không để trống")
-    private String gender;
+//    @NotNull(message = "Không để trống")
+    private String answer;
 
-    @Pattern(regexp = "^(\\d{9})|(\\d{12})$", message = "CMND gồm 9 hoặc 12 số")
-    private String idCard;
-
-    @Pattern(regexp = "^09[0-1][0-9]{7}|\\(84\\)\\+9[0-1][0-9]{7}$",
-             message = "Phải đúng định dạng 090xxxxxxx hoặc 091xxxxxxx hoặc (84)+90xxxxxxx hoặc (84)+91xxxxxxx")
-    private String phone;
-
-    @Pattern(regexp = "^[a-z][a-z0-9_\\.]{5,32}@[a-z0-9]{2,}(\\.[a-z0-9]{2,4}){1,2}$",
-             message = "Phải đúng định dạng abc@xyz.com")
-
-    @NotBlank (message = "Không để trống")
-    private String email;
-    private String address;
+//    @Pattern(regexp = "^(\\d{9})|(\\d{12})$", message = "CMND gồm 9 hoặc 12 số")
 
     @ManyToOne
-    @JoinColumn(name = "customer_type_id")
-    private CustomerType customerType;
+    @JoinColumn(name = "question_type_id")
+    private QuestionType questionType;
+//    @Pattern(regexp = "^09[0-1][0-9]{7}|\\(84\\)\\+9[0-1][0-9]{7}$",
+//            message = "Phải đúng định dạng 090xxxxxxx hoặc 091xxxxxxx hoặc (84)+90xxxxxxx hoặc (84)+91xxxxxxx")
+    private String dateCreate;
 
-    public Customer() {
+//    @Pattern(regexp = "^[a-z][a-z0-9_\\.]{5,32}@[a-z0-9]{2,}(\\.[a-z0-9]{2,4}){1,2}$",
+//            message = "Phải đúng định dạng abc@xyz.com")
+
+//    @NotBlank(message = "Không để trống")
+    private String status;
+
+    public QuestionContent() {
     }
 
-
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String customerId) {
-        this.id = customerId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String customerName) {
-        this.name = customerName;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getBirthday() {
-        return birthday;
+    public String getContent() {
+        return content;
     }
 
-    public void setBirthday(String customerBirthDay) {
-        this.birthday = customerBirthDay;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getGender() {
-        return gender;
+    public String getAnswer() {
+        return answer;
     }
 
-    public void setGender(String customerGender) {
-        this.gender = customerGender;
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
-    public String getIdCard() {
-        return idCard;
+    public QuestionType getQuestionType() {
+        return questionType;
     }
 
-    public void setIdCard(String customerIdCard) {
-        this.idCard = customerIdCard;
+    public void setQuestionType(QuestionType questionType) {
+        this.questionType = questionType;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getDateCreate() {
+        return dateCreate;
     }
 
-    public void setPhone(String customerPhone) {
-        this.phone = customerPhone;
+    public void setDateCreate(String dateCreate) {
+        this.dateCreate = dateCreate;
     }
 
-    public String getEmail() {
-        return email;
+    public String getStatus() {
+        return status;
     }
 
-    public void setEmail(String customerEmail) {
-        this.email = customerEmail;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String customerAddress) {
-        this.address = customerAddress;
-    }
-
-    public CustomerType getCustomerType() {
-        return customerType;
-    }
-
-    public void setCustomerType(CustomerType customerType) {
-        this.customerType = customerType;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

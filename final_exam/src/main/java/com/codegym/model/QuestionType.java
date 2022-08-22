@@ -5,33 +5,41 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "customer_type")
-public class CustomerType {
+@Table(name = "question_type")
+public class QuestionType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
 
-    @OneToMany(mappedBy = "customerType")
-    @JsonBackReference("customerType")
-    private Set<Customer> customers  ;
+    @OneToMany(mappedBy = "questionType")
+    @JsonBackReference("questionType")
+    private Set<QuestionContent> questionContents  ;
 
-    public CustomerType() {
+    public QuestionType() {
     }
 
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer customerTypeId) {
-        this.id = customerTypeId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String customerType) {
-        this.name = customerType;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<QuestionContent> getQuestionContents() {
+        return questionContents;
+    }
+
+    public void setQuestionContents(Set<QuestionContent> questionContents) {
+        this.questionContents = questionContents;
     }
 }

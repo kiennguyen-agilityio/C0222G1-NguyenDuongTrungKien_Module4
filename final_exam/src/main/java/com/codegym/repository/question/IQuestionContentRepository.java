@@ -13,8 +13,8 @@ import java.util.List;
 @Transactional
 public interface IQuestionContentRepository extends JpaRepository<QuestionContent,Integer> {
     Page<QuestionContent> findAll(Pageable pageable);
-    Page<QuestionContent> findAllByIdContainsOrNameContains(String id, String name, Pageable pageable);
-
-    @Query(value = "SELECT *  FROM question_content WHERE name LIKE :name ", nativeQuery = true)
-    List<QuestionContent> searchByName(@Param("name") String name);
+//    Page<QuestionContent> findAllByIdContainsOrNameContains(String id, String name, Pageable pageable);
+//
+    @Query(value = "SELECT *  FROM question_content WHERE title LIKE :title ", nativeQuery = true)
+    List<QuestionContent> searchByTitle(@Param("title") String title);
 }

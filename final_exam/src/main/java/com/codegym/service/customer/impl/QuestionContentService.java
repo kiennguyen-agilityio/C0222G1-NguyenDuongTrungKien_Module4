@@ -39,19 +39,19 @@ public class QuestionContentService implements IQuestionContentService {
     public void delete(Integer id) {
         iQuestionContentRepository.deleteById(id);
     }
-
-    @Override
-    public Page<QuestionContent> findAllByIdOrName(String search, Pageable pageable) {
-        return iQuestionContentRepository.findAllByIdContainsOrNameContains(search, search, pageable);
-    }
+//
+//    @Override
+//    public Page<QuestionContent> findAllByIdOrName(String search, Pageable pageable) {
+//        return iQuestionContentRepository.findAllByIdContainsOrNameContains(search, search, pageable);
+//    }
     @Override
     public void update(QuestionContent questionContent) {
         iQuestionContentRepository.save(questionContent);
     }
 
     @Override
-    public List<QuestionContent> searchByName(String name) {
-        return iQuestionContentRepository.searchByName("%"+name+"%");
+    public List<QuestionContent> searchByTitle(String title) {
+        return iQuestionContentRepository.searchByTitle("%"+title+"%");
     }
 
 }

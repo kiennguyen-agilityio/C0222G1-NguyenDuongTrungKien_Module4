@@ -55,9 +55,9 @@ public class QuestionContentRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/search/{name}")
-    public ResponseEntity<?> searchByName(@PathVariable String name){
-        List<QuestionContent> questionContents= questionContentService.searchByName(name);
+    @GetMapping("/search/{title}")
+    public ResponseEntity<?> searchByName(@PathVariable String title){
+        List<QuestionContent> questionContents= questionContentService.searchByTitle(title);
         return new ResponseEntity<>(questionContents,HttpStatus.OK);
     }
 

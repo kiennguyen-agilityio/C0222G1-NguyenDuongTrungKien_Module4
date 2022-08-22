@@ -17,9 +17,9 @@ public interface IQuestionContentService {
 
     void delete(Integer id);
 
-    Page<QuestionContent> findAllByIdOrName(String search, Pageable pageable);
+//    Page<QuestionContent> findAllByIdOrName(String search, Pageable pageable);
 
     void update(QuestionContent questionContent);
 
-    List<QuestionContent> searchByName(String name);
+    List<QuestionContent> searchByTitle(String name);
 }
